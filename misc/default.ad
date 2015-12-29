@@ -1,0 +1,5 @@
+.PHONY: message
+
+message:
+	   @echo Ecrivez fix.bat dans DOS/WINDOWS ou ./fix.sh dans UNIX/LINUX
+	   @echo pour configurer votre plateforme.

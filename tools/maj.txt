@@ -1,0 +1,25 @@
+Nouvelle version
+===========================
+- eganim.c: Ajout des principaux menus: file,edit,help et les
+            leurs sous menus.
+- eganim.c: Ajout du datafile data.dat et d'un font plus fin.
+- *.c:   Changement de toute les fonctions malloc,realloc et free par les
+         constantes EG_MALLOC,EG_REALLOC,EG_FREE pour plus de facilit‚
+         et plus de portabilit‚.
+- ega.c: Fin de d‚veloppement du chargeur des fichiers *.EGA 8,16,15 Bit.
+
+Nouvelle version
+===========================
+- eganim.c: Ajout de l'insertion et suppression de frame
+- eganim.c: Ajout du dynamisme quand une frame est chang‚e alors tous les
+            listbox, labels changent.
+
+Nouvelle version
+===========================
+- eganim.c: Ajout de d_anim2d_proc() qui affiche une animation dans la GUI.
+- eganim.c: Ajout de l'aper‡u de l'animation … droite.
+
+Nouvelle version
+===========================
+- eganim.c: Debut de cr‚ation d'EG-Animator.
+- eganim.c: Fin de la premiŠre interface, sans menu, sans evenements.

@@ -1,0 +1,44 @@
+
+##----> Utilitaire de fichiers
+CC = gcc
+AR = ar
+CP = cp -f
+RM = rm -f 
+#-----<
+
+#-----> Option de compilateur
+CFLAGS=-Iinclude `allegro-config --cflags` -Wdeprecated-declarations -Wunused-function
+#-----<
+
+PLATFORM = linux
+
+######### Variables pour le compilateur ##########
+# option 
+
+
+INCLUDE_DIR = include
+LIB_DIR = lib/linux
+OBJ_DIR = obj/linux
+SRC_DIR = src
+LIB_FILE = $(LIB_DIR)/libeg.a 
+INCLUDE_FILE = $(INCLUDE_DIR)/eg.h
+
+AR_OPTION = r $(LIB_FILE)
+AR_OPTION2 =
+AVANT_CPP = -c -Wall
+AVANT_O = -o
+#-----
+
+CC_LIB_DIR = /usr/local/lib
+CC_INCLUDE_DIR  = /usr/local/include
+
+EXE =
+
+MAKE_EXE1 = $(CC)
+MAKE_EXE2 = $(CFLAGS) -o
+
+LIBRARY =  `allegro-config --libs`
+
+RM_OBJS =
+
+O = .o

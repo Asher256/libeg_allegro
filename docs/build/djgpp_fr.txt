@@ -1,0 +1,70 @@
+                       ______   ________
+                      /\   __\ /\   __  \
+                      \ \  \___\ \  \ \__\
+                       \ \   __\\ \  \  ___
+                        \ \  \___\ \  \_\  \
+                         \ \_____\\ \_______\
+                          \/____/  \________/
+
+                  * Compiler EG Library avec DJGPP *
+
+=========================================
+============ Note pour DJGPP ============
+=========================================
+
+   Status: Complete.
+
+===========================================
+============ Programmes requis ============
+===========================================
+   - DJGPP 2.01 or plus (djdev*.zip).
+   - GCC compiler 2.91.x or plus (gcc*b.zip).
+   - Binutils 2.9.x or plus (bnu*b.zip).
+   - GNU make (mak*b.zip).
+   - Allegro installe dans votre compilateur DJGPP (alleg.a + headers)
+
+   Tous les fichiers DJGPP sont dans le repertoire du site mirroir SimTel:
+   "/pub/simtelnet/gnu/djgpp/".
+   Vous devez etre sure d'avoir installe DJGPP avec les instructions
+   de "readme.1st".
+
+===========================================
+========= Installer Eg Library ============
+===========================================
+   Ecrivez "fix.bat djgpp", puis "make" pour compiler la librairie.
+   Maintenant, vous avez compile la librairie+exemples+documentation.
+
+   Note 1:
+   Si vous voulez creer une documentation HTML dans un fichier seul et meme
+   fichier: "eg.htm", dans le fichier "docs/src/eg._tx" supprimez
+   "@multiplefiles" qui se trouve dans la ligne 11. Apres ceci, executez
+   "make" une autre fois.
+
+   Note 2:
+   Si vous voulez supprimer la librairie tapez: "make clean".
+   Sinon, si vous voulez supprimer la librairie+documentation+exemples
+   tapez "make veryclean".
+
+==========================================
+============ Utiliser EG Library =========
+==========================================
+
+   Toute les fonctions, variables, structures sont definies dans "eg.h".
+   Vous devez inclure ce header dans votre programme. Et compiler avec
+   la librairie "libeg.a".
+
+   Ajoutez cette lignes dans tous vos sources C et C++ pour utiliser
+   Eg Library:
+
+      #include <eg.h>
+
+   Note: "eg.h" inclue directement Allegro.h
+
+   Si vous compilez par la ligne de commande ou avec un makefile, ajoutez
+   "-leg -lalleg" dans votre edition de liens:
+
+      gcc foo.c -o foo.exe -leg -lalleg
+
+   Si vous utilisez Rhide, allez dans le menu Options/libraries, ajoutez
+   "alleg" et "eg" dans les deux premiers espaces vides et vous devez etres
+   sures que les deux cases a cocher sont cochees.

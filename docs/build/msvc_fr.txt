@@ -1,0 +1,72 @@
+                       ______   ________
+                      /\   __\ /\   __  \
+                      \ \  \___\ \  \ \__\
+                       \ \   __\\ \  \  ___
+                        \ \  \___\ \  \_\  \
+                         \ \_____\\ \_______\
+                          \/____/  \________/
+
+          * Compiler EG Library avec Microsoft Visual C++ *
+
+==========================================================
+============ Notes pour Microsoft Visual C++ =============
+==========================================================
+
+   Status: complete.
+
+==========================================
+============ Programmes requis ===========
+==========================================
+   - Microsoft Visual C++ et Allegro installer dans votre compilateur VC++
+     (alleg.lib + headers)
+   - GNU make (mak*b.zip).
+
+   NOTE: Eg Library est tester avec Visual C++ 6.0.
+
+   Vous pouvez telecharher Gnu make de DJGPP dans le repertoire du site
+   mirroir de SimTel '/pub/simtelnet/gnu/djgpp/'. Sinon, utilisez
+   Zip Picker dans 'http://www.delorie.com/djgpp/'.
+
+===========================================
+========= Installer Eg Library ============
+===========================================
+   Ecrivez "fix.bat msvc", puis "make" pour compiler la librairie.
+   Maintenant, vous avez compile la librairie+exemples+documentation.
+
+   Note 1:
+   Si vous voulez creer une documentation HTML dans un fichier seul et meme
+   fichier: "eg.htm", dans le fichier "docs/src/eg._tx" supprimez
+   "@multiplefiles" qui se trouve dans la ligne 11. Apres ceci, executez
+   "make" une autre fois.
+
+   NOTE 2:
+   Si vous voulez supprimer la librairie tapez: "make clean".
+   Sinon, si vous voulez supprimer la librairie+documentation+exemples
+   tapez "make veryclean".
+
+   NOTE 3:
+   -- IN WINDOWS 95-98?
+   Vous devez avant tout savoir ou se trouve `vcvars32.bat', Normalement
+   il est dans le repertoire de Visual Studio ('vc98/bin').
+   Ce fichier batch declare toute les variables d'environnement necessaire
+   pour compiler des programmes avec Visual C++.
+   Si vous avez installe Visual C++ dans le repertoire par defaut ecrivez: 
+   'c:\progra~1\micros~2\vc98\bin\vcvars32.bat' ou mettez ce chemin dans
+   votre autoexe.bat puis redemarrez votre ordinateur. 
+   Note: Si vous avez le message "Out of Environment space"
+   Ajouter cette ligne dans votre config.sys:
+   "shell = c:\command.com /e:8195 /p" and reboot your computer.
+   Puis redemarrez votre ordinateur.
+
+   -- In Windows ME?
+   Si vous utilisez Windows ME, vous devez selectionner "run" dans le menu
+   demerrer et ecrire "msconfig". Selectionnez l'onglet environnement
+   puis ajoutez la ligne vcvars32.bat avec copier/coller puis redemarrez
+   votre ordinateur.
+
+   -- Windows 2000-XP or NT ??
+   Ouvrir le panneau de configuration, ouvez "system", puis l'onglet "Avance"
+   et enfin, le bouton "Environnement". Ajouter la variable d'environnement
+   vcvars32.bat (Vous devez l'ajouter manuellement).
+   Redemarrez votre ordinateur.
+

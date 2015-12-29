@@ -1,0 +1,59 @@
+Quelque notes personelles sur EG libraries.
+
+******************************************************************************
+FileFormat load et save =
+=========================
+
+General:
+---------
+0            Pas d'erreur
+
+Sauvegarde de fichiers:
+--------------------------
+1            Disque plein ou protege en ecriture
+2            Erreur dans l'ouverture du fichier
+
+L'ouverture des fichiers:
+--------------------------
+3            Le fichier n'existe pas
+4            Format de Fichier incorrect
+5            Le fichier est defectueux
+******************************************************************************
+Carte:
+------
+Legende: PG    Position generale en carreaux (dans la carte)
+         SC    Position en Scroll dans un carreau PG
+         Size  Le size de la tile, comme le width ou
+               height
+
+pg =  count/size          //le position en count sur le size des tiles
+sc =  count%size          //countx modulo le size des tiles
+
+count = (pg*size)+sc;    //pgx mul xmax puis add scx
+
+******************************************************************************
+Trigonometrie:
+--------------
+
+radian = (deg*PI)/180       //Convertissement de degres en Radian
+
+ou la sub: "var = deg2rad(deg);"
+******************************************************************************
+Collision:
+----------
+
+Collision en x (exemple):
+Legende: personnage_height   c'est le personnage dont on teste la collision (width)
+         tile_height         le size y des carreaux dans le map (camera->ymax)
+
+for(y=0;y<personnage_height;y+=tile_height)
+{
+        (...) test_obstacle(width-1+bouge, y)
+}
+
+******************************************************************************
+
+
+--
+Email: contact@asher256.com
+

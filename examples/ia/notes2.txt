@@ -1,0 +1,6 @@
+fonc.h 		Fonctions d'initialisation
+camera.cpp
+pos.cpp		Position 2D dans un map
+carte.cpp
+iaengine.cpp	Fonction d'intelligence artificielle pour que O suive X
+ia.cpp		Fichier princiapl (main)

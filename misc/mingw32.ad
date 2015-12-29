@@ -1,0 +1,55 @@
+.PHONY: badmingw
+
+# check that the DJGPP environment variable is set
+ifndef MINGDIR
+badmingw:
+	 @echo Please specify the Mingw directory in MINGDIR environnement variable.
+	 @echo widh "set MINGDIR=xxx".
+endif
+
+##----> Utilitaire de fichiers
+#### RM ou DELTREE??
+RM = rm.exe
+CP = xcopy
+
+CC = gcc.exe
+AR = ar.exe
+#-----<
+ 
+ifdef PGCC
+	CFLAGS = -linclude -O2 -mpentium
+else
+	CFLAGS = -linclude -O2 -m486
+endif
+
+######### Variables pour le compilateur ##########
+# option comme -rv de DJGPP
+
+LIB_DIR = lib/mingw32
+OBJ_DIR = obj/mingw32
+INCLUDE_DIR = include
+INCLUDE_FILE = $(INCLUDE_DIR)/eg.h
+LIB_FILE = $(LIB_DIR)/libeg.a 
+SRC_DIR = src
+
+AR_OPTION = r $(LIB_FILE)
+AR_OPTION2 = 
+AVANT_CPP = -c 
+AVANT_O = -o
+#-----
+
+MINGDIR_D = $(subst \,/, $(MINGDIR))
+
+CC_LIB_DIR = $(MINGDIR_D)/lib
+CC_INCLUDE_DIR = $(MINGDIR_D)/include
+
+EXE = .exe
+
+MAKE_EXE1 = $(CC)
+MAKE_EXE2 = -mwindows $(CFLAGS) -o
+
+LIBRARY =  -lalleg
+
+RM_OBJS =
+
+O = .o

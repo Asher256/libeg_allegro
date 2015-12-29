@@ -1,0 +1,53 @@
+# Fichier de définitions pour compatibilité avec nmake de Visual C++
+
+.PHONY: badmsvc
+
+##### SI LA VARIABLE DJDIR N'EST PAS DECLAREE ######
+ifndef MSVCDIR
+badmsvc:
+	 @echo La variable d'environnement de Visual C++ MSVCDIR n'est pas d‚clar‚e.
+	 @echo Modifiez votre fichier autoexec.bat pour y ajouter le chemin
+	 @echo du fichiers batch de d‚clarations vcvars32.bat...
+endif
+
+PLATFORM = msvc
+
+##---- Utilitaire de fichiers
+CP = copy
+RM = deltree /y
+CC=  $(MSVCDIR)\bin\cl.exe
+AR = $(MSVCDIR)\bin\lib.exe
+#-----
+
+#----- Option de compilateur
+CFLAGS=-Ox -GA3s -nologo -W3 -Iinclude
+O = .obj
+C = .cpp
+#-----
+
+#----- Directory
+INCLUDE_DIR = include
+LIB_DIR = lib\msvc
+OBJ_DIR = obj\msvc
+SRC_DIR = src
+LIB_FILE = $(LIB_DIR)\eg.lib
+INCLUDE_FILE = $(INCLUDE_DIR)\eg.h
+
+AVANT_CPP = -c 
+AVANT_O = -Fo
+
+AR_OPTION = -out:$(LIB_FILE)
+AR_OPTION2 = -nologo 
+#-----
+
+# CHEMINS DU COMPILATEUR
+CC_LIB_DIR = $(MSVCDIR)\lib
+CC_INCLUDE_DIR = $(MSVCDIR)\include
+
+EXE = .exe
+MAKE_EXE1 = $(CC)
+MAKE_EXE2 = $(CFLAGS) -Fe
+LIBRARY = alleg.lib
+
+# La macro pour effacer les fichiers obj
+RM_OBJS = $(RM) *$(O) >nul

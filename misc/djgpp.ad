@@ -1,0 +1,101 @@
+.PHONY: baddjgpp badmakedoc baddjdev badgcc badbnu badmake badpath
+
+# check that the DJGPP environment variable is set
+ifndef DJDIR
+baddjgpp:
+	 @echo Your DJGPP environment variable is not set correctly! It should
+	 @echo point to the djgpp.env file: see the djgpp readme.1st for details.
+endif
+
+# check that the djdev package is installed
+ifeq ($(wildcard $(DJDIR)/bin/djasm.exe),)
+baddjdev:
+	@echo Missing djgpp package! You need to install djdev201.zip (or whatever the
+	@echo latest version is). Download this from wherever you got djgpp, and unzip
+	@echo it into the root of your djgpp directory.
+endif
+
+# check that the gcc package is installed
+ifeq ($(wildcard $(DJDIR)/bin/gcc.exe),)
+badgcc:
+	@echo Missing djgpp package! You need to install gcc2721b.zip (or whatever the
+	@echo latest version is). Download this from wherever you got djgpp, and unzip
+	@echo it into the root of your djgpp directory.
+endif
+
+# check that the binutils package is installed
+ifeq ($(wildcard $(DJDIR)/bin/ld.exe),)
+badbnu:
+	@echo Missing djgpp package! You need to install bnu27b.zip (or whatever the
+	@echo latest version is). Download this from wherever you got djgpp, and unzip
+	@echo it into the root of your djgpp directory.
+endif
+
+# check that the make package is installed
+ifeq ($(wildcard $(DJDIR)/bin/make.exe),)
+badmake:
+	@echo Missing djgpp package! You need to install mak3761b.zip (or whatever the
+	@echo latest version is). Download this from wherever you got djgpp, and unzip
+	@echo it into the root of your djgpp directory.
+endif
+
+# check that djgpp/bin is pathed
+ifeq ($(wildcard $(addsuffix /djasm.exe,$(subst ;, ,$(PATH)))),)
+badpath:
+	@echo Your PATH is not set correctly! This must include the
+	@echo djgpp bin directory: see the djgpp readme.1st for details.
+endif
+
+##----> Utilitaire de fichiers
+#### RM ou DELTREE??
+RM = rm
+ifeq ($(wildcard $(DJDIR)/bin/rm.exe),)
+	 RM = deltree /y
+endif
+#### CP ou COPY?
+CP = cp
+ifeq ($(wildcard $(DJDIR)/bin/cp.exe),)
+	 CP = copy
+endif
+
+CC = gcc
+AR = ar
+#-----<
+
+ifdef PGCC
+	 CFLAGS = -Iinclude -mpentium -O6 
+else
+	 CFLAGS = -Iinclude -m486 -O3 
+endif
+
+######### Variables pour le compilateur ##########
+# option comme -rv de DJGPP
+
+LIB_DIR = lib\djgpp
+OBJ_DIR = obj\djgpp
+INCLUDE_DIR = include
+INCLUDE_FILE = $(INCLUDE_DIR)\eg.h
+LIB_FILE = $(LIB_DIR)\libeg.a 
+SRC_DIR = src
+
+AR_OPTION = r $(LIB_FILE)
+AR_OPTION2 = 
+AVANT_CPP = -c 
+AVANT_O = -o
+#-----
+
+DJDIR_D = $(subst /,\, $(DJDIR))
+
+CC_LIB_DIR = $(DJDIR_D)\lib
+CC_INCLUDE_DIR  = $(DJDIR_D)\include
+
+EXE = .exe
+
+MAKE_EXE1 = $(CC)
+MAKE_EXE2 = $(CFLAGS)  -o
+
+LIBRARY =  -lalleg
+
+RM_OBJS =
+
+O = .o

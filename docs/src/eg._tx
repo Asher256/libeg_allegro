@@ -1,0 +1,420 @@
+@#=============================================================
+@# EG Library Documentation for Allegro's makedoc 
+@# By Asher256
+@#
+@# Email: contact@asher256.com
+@# Url:   http://www.asher256.com/
+@#=============================================================
+@#
+@#
+@#--------- CONFIGURATION -----------#
+@multiplefiles
+@locale=latin1
+@h=<html><head><title>#</title></head><body>
+@rtfh=Eg Library For Allegro
+@f1=<p><hr><p><a href="
+@f2=">Back to main menu</a></body></html>
+@#-----------------------------------#
+@################ NEEED
+@!man
+@!text
+@!rtf
+@!html
+@################ HTML LOGO
+@html
+@<html><head><title>-=O> Eg Library Manual <O=-</title></head><body bgcolor=#FFFFFF>
+@<table cellpadding=0 cellspacing=3 border=0 valign=top align=center>
+@<tr><td align=center valign=top>
+@<font size=7 face="arial, verdana, helvetica"><b>EG</b></font>
+@</td></tr>
+@<tr><td align=center valign=top>
+@<font face="arial, verdana, helvetica" size=4><b>E</b>nchanced <b>G</b>ame <b>L</b>ibrary</font>
+@</td></tr>
+@</table>
+@!html
+@################ TEXT LOGO
+@text
+                    =====================================
+                                EG Library
+                                  Manual
+
+                                By Asher256 
+                    =====================================
+@!text
+@################ RTF LOGO
+@rtf
+<center><H1>Eg Library<br>Documentation</H1></center>
+@!rtf
+@################ Disclaimer
+@text
+@rtf
+@html
+@<pre>
+
+#include &ltstd_disclaimer.h&gt
+   "Je n'accepte aucune responsabilite pour tout effet, problemes que peut
+    engendrer l'utilisation de cette librairie sur vous, votre sante, votre
+    chien ou toute autre chose. Utilisez la a vos risques et perils.
+@</pre>
+
+<center>- CETTE DOCUMENTATION EST EN DEVELOPPEMENT ET N'EST PAS ENCORE TERMINEE -</center>
+
+@!text
+@!rtf
+@!html
+@#
+@################ CONTENTS
+@html
+@heading
+Contents
+
+@contents
+
+@!html
+@############### PAGE: USING EG LIBRARY
+@text
+@html
+@rtf
+@#
+@heading
+Introduction
+
+Lisez le fichier lisezmoi.txt pour une introduction generale, details de
+copyright et informations sur l'installation de EG Library dans votre
+compilateur.<br>
+
+<br>Cette documentation explique seulement les principes de base de Eg Library.<br>
+Si vous avez besoin d'aide, n'hesitez pas a me le demander par email:
+<a href="mailto:contact@asher256.com">contact@asher256.com</a>
+<br>
+@#
+@!text
+@!html
+@!rtf
+@############### PAGE: FPS
+@text
+@html
+@rtf
+@#
+
+@heading
+FPS
+
+Les routines de FPS sont pratiques pour calculer le FPS facilement sans
+reecrire le code a chaque fois.
+
+@@FPS @*create_fps(volatile int *counter);
+    Allocation memoire d'un nouvel FPS. Le pointeur *counter est un racourci
+    vers un handle timer qui s'incremente chaque milliseconde.
+    Ce dernier est utilise par get_fps() qui va calculer le fps en se basent
+    sur ce compteur.<br>
+    ATTENTION: 'counter' ne doit pas etre utilise par une autre fonction
+               car a chaque fois qu'une seconde passe (1000 millisecondes),
+               il l'initialise a zero.
+
+@<pre>
+  Exemple d'un handle timer:
+  -------------------------------------------------------------------
+    static volatile int counter=0,counter2=0,counter3=0;
+
+    void handle(void)
+    {
+        counter++;
+        counter2++;
+        counter3++;
+    } END_OF_FUNCTION(handle);
+  -------------------------------------------------------------------
+@</pre>
+
+    Cette fonction regroupe 3 compteurs il faut l'initialise avec:<br>
+
+@<pre>
+  -------------------------------------------------------------------
+    install_int(handle, 1);
+  -------------------------------------------------------------------
+@</pre>
+
+@@void @destroy_fps(FPS *fps);
+    Detruit le compteur FPS cree avec la fonction create_fps().
+
+@@int @get_fps(FPS *fps);
+    C'est la fonction principale de gestion de fps. Vous devez l'appeler dans
+    toute vos boucles. Elle calcule en temps reel le FPS et retourne sa
+    valeur.
+
+@<b>
+Exemple:
+@</b><pre><i>
+   ------------------------------------------------------------------
+       #include &ltallegro.h&gt
+       #include &lteg.h&gt
+       #include &ltstdlib.h&gt     //La fonction random()
+
+       // La variable du compteur
+       volatile int counter=0;
+
+       // Le compteur FPS (en millisecondes)
+       void handle()
+       {
+           counter++;
+       }
+       END_OF_FUNCTION(handle);
+
+       int main(void)
+       {
+      FPS *fps;
+      int actual_fps;
+
+      // Installation d'Allegro et du Clavier
+      allegro_init();
+      install_keyboard();
+
+      // Installation du Handle Timer
+      install_timer();
+      LOCK_VARIABLE(counter);
+      LOCK_FUNCTION(handle);
+      install_int(handle,1);
+
+      // Met le mode graphique
+      if(set_gfx_mode(GFX_AUTODETECT,640,480,0,0)<0) {
+          set_gfx_mode(GFX_TEXT,80,25,0,0);
+          allegro_message("Erreur dans le chargement de l'‚cran graphique...\n");
+          exit(1);
+      }
+
+      // Allocation memoire d'un nouvel FPS
+       fps = create_fps(&counter);
+
+      // Boucle
+      while(!key[KEY_ESC])
+      {
+           // Stupides lignes a l'ecran
+           line(screen,random()%SCREEN_W,
+               random()%SCREEN_H,
+               random()%SCREEN_W,
+               random()%SCREEN_H,
+               random()%256);
+
+           // Le FPS actuel
+           actual_fps = get_fps(fps)
+
+           // Affichage du FPS actuel
+           textprintf(screen,font,0,0,15,"FPS:%i",actual_fps);
+      }
+
+      return 0;    // Tout est OK !
+       }
+       END_OF_MAIN();
+   ------------------------------------------------------------------
+@</i></pre>
+
+@!text
+@!html
+@!rtf
+
+@############### PAGE: ANIMATION 2D
+@text
+@html
+@rtf
+@#
+
+@heading
+Animation 2D
+
+ANIM2D est une structure de creation d'animation 2d tres puissante et vous
+sera tres utile dans la creation de jeux avec Eg+Allegro, vous pouvez y
+inserer des sprites BITMAP ou des RLE_SPRITE et les animer en temps reel.
+Vous affichez L'animation avec une simples fonctions Haut Niveau similaires
+a draw_sprite() d'allegro, retourne le width et height de la frame actuelle...
+
+@@ANIM2D @*create_anim2d(volatile int *counter);
+    Allocation memoire d'une nouvelle animation 2D.
+    'counter' c'est un handle vers un compteur qui s'incremente chaque
+    millisecondes comme par exemple: (void create_fps() dans FPS)<br>
+
+@@void @destroy_anim2d(ANIM2D *animation);
+    Destruction d'une animation 2D.
+
+@@void @anim2d_clear(ANIM2D *animation);
+    Effacer toutes les frames de l'animation.
+
+@@int @anim2d_add_bmp(ANIM2D *anim, BITMAP*sprite, int delay);
+    Ajoute du BITMAP 'sprite' dans l'animation 'anim' avec le delay
+    'delay'.<br>
+    Retourne: L'index de la frame ajoutee.
+
+@@int @anim2d_add_rle(ANIM2D *anim, RLE_SPRITE *sprite, int delay);
+    La meme chose mais ici il ajoute une sprite RLE.
+
+@@void @anim2d_rew(ANIM2D *animation);
+    Revenir a la premiere frame.
+
+@@void @anim2d_ff(ANIM2D *animation);
+    L'oppose de anim2d_rew(), elle position la frame actuelle dans la
+    derniere frame
+
+@@int @anim2d_draw_inc(ANIM2D *animation, BITMAP *buffer, int x, int y);
+    Affiche l'animation 'animation' dans 'buffer' dans la position 'x' et 'y'.
+    Si le temps de la frame actuelle est perime, alors elle passe a la
+    prochaine frame tout en affichent l'animation.<br>
+    Cette fonction stoppe l'animation dans la derniere frame.<br>
+    Retourne: 0 si l'animation est jouee, non zero si animation terminee.
+
+@@int @anim2d_draw_incloop(ANIM2D *animation, BITMAP *buffer, int x, int y);
+    La meme chose que anim2d_draw_inc() mais celle-ci joue et affiche
+    l'animation en loop, donc elle ne stoppe pas dans la derniere frame
+    mais quand elle aboutit a celle-ci elle revient au debut de l'animation.
+
+@@int @anim2d_inc(ANIM2D *animation);
+@@int @anim2d_incloop(ANIM2D *animation);
+    Incremente l'animation sans l'afficher, anim2d_inc*() retournent les
+    memes valeurs que les fonctions anim2d_draw_inc*().
+
+@@void @anim2d_draw(ANIM2D *animation, BITMAP *buffer, int x, int y);
+    Affiche la frame actuelle de l'animation sans changer de frame.<br>
+    si on marie par exemple anim2d_inc() avec anim2d_draw() cela nous
+    donneras tout simplement anim2d_draw_inc().
+
+@@int @anim2d_draw_dec(ANIM2D *animation, BITMAP *buffer, int x, int y);
+@@int @anim2d_draw_decloop(ANIM2D *animation, BITMAP *buffer, int x, int y);
+@@int @anim2d_dec(ANIM2D *animation);
+@@int @anim2d_decloop(ANIM2D *animation);
+    Ces fonctions sont l'oppose des fonctions anim2d_*inc(), elles jouent
+    l'animation a l'envers et l'animation se termine a la frame 0 non pas
+    a la derniere frame.
+
+@@int @anim2d_getwidth(ANIM2D *animation)
+@@int @anim2d_getheight(ANIM2D *animation)
+    Retournent les informations de largeur (width), de hauteur (height)
+    de la frame actuelle.
+
+@@void @anim2d_set_frame(ANIM2D *animation, int index);
+    Change la frame actuelle par 'index'.<br>
+    INFO: La position index est retournee par anim2d_add_bmp()
+    et anim2d_add_rle().
+
+@@int @anim2d_get_frame(ANIM2D *animation);
+    Retourne l'index de la frame actuelle.
+
+@!text
+@!html
+@!rtf
+
+
+
+@############### PAGE: CREDIT
+@text
+@html
+@rtf
+@#
+
+@heading
+Credit Scroller
+
+Vous pouvez creer un credit scroller 100% multimedia qui comporte des
+BMP, RLE, Animations (ANIM2D), texte+font+couleur. Et facilement par de
+simple fonctions haut niveau.
+
+@@CREDIT @*create_credit();
+    Allocation memoire d'un nouveau credit scroller.
+
+@@void @destroy_credit(CREDIT *credit);
+    Destruction d'un credit scroller.
+
+@@void @credit_add_bmp(CREDIT *credit, BITMAP *bmp);
+@@void @credit_add_rle(CREDIT *credit, RLE_SPRITE *rle);
+@@void @credit_add_text(CREDIT *credit, char *text, FONT *f, int color);
+@@void @credit_add_space(CREDIT *credit, int py);
+@@void @credit_add_anim2d(CREDIT *credit, ANIM2D *anim, int loop);
+    Ajout d'un objet dans le credit: Vous conaissez deja bmp, rle,
+    text, Anim ZD EG_OBJECT sera traite ulterieurement.<br>
+    'space' est un espace Y entre l'objet precedent et le suivant.
+
+@@int @credit_moveup(CREDIT *credit, BITMAP *buffer, int pixels)
+    Faire monter le credit avec le nombre de pixels 'pixels' (generalement 1).
+    Retour: <b>CREDIT_OK</b> si pas encore termine, et <b>CREDIT_END</b> si
+    le credit est fini.<br>
+    La variable 'buffer' n'est pas utilisee pour l'affichage mais pour le
+    calcul de position. Car la position du credit est calculee dynamiquement.
+
+@@int @credit_moveup_draw(CREDIT *credit, BITMAP *buffer, int pixels);
+    Faire monter le credit et l'afficher.
+
+@@int @credit_gety(CREDIT *credit, BITMAP *buffer);
+    Retourne la position y du credit dans le BITMAP 'buffer'.
+
+@@void @credit_rew(CREDIT *credit);
+    Faire revenir le credit au debut (en bas).
+
+@@int @credit_getheight(CREDIT *credit);
+    Retourne la hauteur du credit (somme de height de tous les objets).
+
+@!text
+@!html
+@!rtf
+
+@########## CHEAT
+@text
+@html
+@rtf
+
+@heading
+Cheat Code
+
+Cheat code est une structure qui vous servira a manipuler les cheat codes
+en temps reel.<br>
+Une structure cheat peut comporter plusieurs cheats non pas un seul, elle
+les testent et si un cheat est tape alors elle retourne son numero d'index.<br>
+
+@@CHEAT @*create_cheat(volatile int *counter);
+    Allocation memoire d'un nouveau cheat. 'counter' c'est une variable timer qui
+    s'incremente chaque millisecondes (void create_fps() pour plus d'infos).
+
+@@void @destroy_cheat(CHEAT *cheat);
+    Desallocation memoire d'un cheat code.
+
+@@int @add_cheat(CHEAT *cheat, unsigned char *code, int len);
+    Cette fonction ajoute un cheat '*code' avec le nombre de caracteres 'len'
+    dans la liste de cheats 'cheat'.<br>
+    ATTENTION: 'code' n'est pas une chaine ASCII, mais une chaine avec des scan
+               codes.<br>
+               par exemple:
+               <pre>
+               -----------------------------------------------------------
+               unsigned char *code[] = {KEY_H,KEY_E,KEY_L,KEY_L,KEY_O};
+               int len = 5; //le len de hello
+               -----------------------------------------------------------
+               </pre>
+    RETOUR: Elle retourne le numero d'index du cheat, celui ci nous serviras
+            a detecter si ce cheat a ete tape, donc vous devez toujours avoir
+            ce numero dans une variable.
+
+@@void @@modify_cheat(CHEAT *cheat, int index, char *code, int len);
+    Cette fonction modifie le cheat.<br>
+    'index' c'est l'index du cheat qui est retourne par add_cheat().
+
+@@int @test_cheat(CHEAT *cheat);
+    C'est la fonction principale, vous devez la mettre dans toutes vos
+    boucles.
+    Elle teste le chaet et retourne le numero d'index du cheat (qui est
+    retourne par add_cheat()). Sinon, elle retourne CHEAT_FALSE si
+    l'utilisateur n'ecrit aucun cheat et CHEAT_WRITE si l'utilisateur est
+    entrain d'ecrire un cheat.<br>
+    ATTENTION: Cette fonction utilise readkey() vous ne pouvez pas inserer
+    deux fonctions test_cheat() dans une mem boucle.
+
+@@void @set_cheat_delay(CHEAT *cheat, int delay);
+    Quand on ecrit le cheat et qu'on relache une touche pendent un certain
+    temps test_cheat() stoppe l'ecriture du cheat (evenement classique d'un
+    cheat code). Si vous voulez ajouter plus de temps dans l'invalidite du
+    cheat, vous devez modifier le delay avec cette fonction.<br>
+    Par defaut le delay est de 500 millisecondes.<br>
+
+@@int @get_cheat_delay(CHEAT *cheat);
+    Retourne le delay du cheat.
+
+@!text
+@!html
+@!rtf
+
+
