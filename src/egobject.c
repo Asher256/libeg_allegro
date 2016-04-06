@@ -26,7 +26,7 @@
  *
  * Si vous trouvez des Bugs, prévenez moi:
  *
- *                       contact@asher256.com
+ *                       asher256@gmail.com
  *
  ******************************************************************/
 

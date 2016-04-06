@@ -13,7 +13,7 @@
  * Description: Exemple de egcheat code avec Eg Library.
  *
  * Auteur:      Asher256
- * Email:       contact@asher256.com
+ * Email:       asher256@gmail.com
  *
  ******************************************************************/
 

@@ -2,7 +2,7 @@
 # Fichier MAKE pour EG Library
 # Par Asher256
 #
-# Pour contacter l'auteur: contact@asher256.com
+# Pour contacter l'auteur: asher256@gmail.com
 #########################################################
 
 .PHONY: badeg

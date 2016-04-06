@@ -1,5 +1,5 @@
 /* Une démo d'EG avec un mini clone de MisterKid (QBasic)
- * Email:  contact@asher256.com
+ * Email:  asher256@gmail.com
  *
  * Touches:
  * --------
