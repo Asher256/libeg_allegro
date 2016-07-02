@@ -19,13 +19,13 @@ fix ()
 ### Aide pour le ligne de commande ###
 error()
 {
-    echo "          linux              pour linux/gcc ou autres *NIX" 
-    echo "          djgpp              pour Djgpp/dos" 
-    echo "          mingw32            pour Mingw32/Windows" 
+    echo "          linux              pour linux/gcc ou autres *NIX"
+    echo "          djgpp              pour Djgpp/dos"
+    echo "          mingw32            pour Mingw32/Windows"
     echo "          msvc               pour Visual C++"
-    echo 
-    echo "Exemple: \"./fix.sh unix\""
-    echo 
+    echo
+    echo "Exemple: \"./fix.sh linux\""
+    echo
 }
 
 
